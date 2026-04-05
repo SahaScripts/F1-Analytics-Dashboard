@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F1 Analytics Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-scanlines"></div>
+
+    <div class="hero-topbar">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/200px-F1.svg.png" alt="F1 Logo" class="f1-logo-hero" />
+      <div class="live-badge"><span class="pulse-dot"></span>LIVE DATA</div>
+    </div>
+
+    <div class="hero-body">
+      <div class="hero-eyebrow">FORMULA 1 · SEASONS 2020–2026</div>
+      <h1 class="hero-headline">
+        <span class="hero-h-red">F1</span><br>
+        <span class="hero-h-white">DASHBOARD</span>
+      </h1>
+      <p class="hero-desc">The ultimate analytics hub for seven legendary seasons of Formula 1 racing — drivers, constructors, and race calendars.</p>
+
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-val">7</div><div class="hstat-lbl">Seasons</div></div>
+        <div class="hstat-sep"></div>
+        <div class="hstat"><div class="hstat-val">140+</div><div class="hstat-lbl">Races</div></div>
+        <div class="hstat-sep"></div>
+        <div class="hstat"><div class="hstat-val">22</div><div class="hstat-lbl">Teams</div></div>
+        <div class="hstat-sep"></div>
+        <div class="hstat"><div class="hstat-val">60+</div><div class="hstat-lbl">Drivers</div></div>
+      </div>
+
+      <div class="hero-btns">
+        <button class="hbtn hbtn-primary" onclick="scrollToMain()">VIEW STANDINGS</button>
+        <button class="hbtn hbtn-outline" onclick="scrollToMain(); setTimeout(()=>navTo('calendar'),300)">RACE CALENDAR</button>
+      </div>
+    </div>
+
+    <div class="hero-champions">
+      <div class="hero-champ-label">WORLD CHAMPIONS</div>
+      <div class="hero-champ-row">
+        <div class="champ-pill">
+          <img src="https://www.formula1.com/content/dam/fom-website/drivers/L/LEWHAM01_Lewis_Hamilton/lewham01.png.transform/2col/image.png" alt="HAM" onerror="this.src='https://placehold.co/48x54/00d2be/000?text=HAM'"/>
+          <div><div class="cp-name">Hamilton</div><div class="cp-year">2020</div></div>
+        </div>
+        <div class="champ-pill">
+          <img src="https://www.formula1.com/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/2col/image.png" alt="VER" onerror="this.src='https://placehold.co/48x54/1a1f71/fff?text=VER'"/>
+          <div><div class="cp-name">Verstappen</div><div class="cp-year">2021–2024</div></div>
+        </div>
+        <div class="champ-pill">
+          <img src="https://www.formula1.com/content/dam/fom-website/drivers/L/LANNOR01_Lando_Norris/lannor01.png.transform/2col/image.png" alt="NOR" onerror="this.src='https://placehold.co/48x54/ff8000/000?text=NOR'"/>
+          <div><div class="cp-name">Norris</div><div class="cp-year">2025</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll" onclick="scrollToMain()">
+      <span class="scroll-text">SCROLL</span>
+      <div class="scroll-chevrons"><span>&#8964;</span><span>&#8964;</span></div>
+    </div>
+  </section>
+
+  <!-- ═══ STICKY NAV ═══ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/200px-F1.svg.png" alt="F1" class="nav-logo" />
+      <div class="nav-links">
+        <a class="nav-link active" data-section="home">Standings</a>
+        <a class="nav-link" data-section="drivers">Drivers</a>
+        <a class="nav-link" data-section="constructors">Constructors</a>
+        <a class="nav-link" data-section="calendar">Race Calendar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ MAIN ═══ -->
+  <main id="main">
+
+    <!-- DRIVER STANDINGS -->
+    <section id="home" class="section active-section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag">DRIVER STANDINGS</span>
+          <h2 class="section-title">Championships</h2>
+        </div>
+        <div class="year-filter">
+          <label for="standings-year">Season:</label>
+          <select id="standings-year"></select>
+        </div>
+      </div>
+      <div class="controls-bar">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Search driver or team..." />
+        </div>
+        <button class="btn btn-primary" onclick="sortDrivers()">⬆ Sort by Points</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>POS</th>
+              <th>DRIVER</th>
+              <th>NAT</th>
+              <th>TEAM</th>
+              <th>CAR</th>
+              <th>PTS</th>
+            </tr>
+          </thead>
+          <tbody id="driversBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- DRIVER PROFILES -->
+    <section id="drivers" class="section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag">PROFILES</span>
+          <h2 class="section-title">Driver Profiles</h2>
+        </div>
+        <span class="year-label-badge" id="profileYearLabel">2026</span>
+      </div>
+      <div id="driverCards" class="cards-grid"></div>
+    </section>
+
+    <!-- CONSTRUCTOR STANDINGS -->
+    <section id="constructors" class="section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag">TEAMS</span>
+          <h2 class="section-title">Constructor Standings</h2>
+        </div>
+        <div class="year-filter">
+          <label for="constructor-year">Season:</label>
+          <select id="constructor-year"></select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>POS</th>
+              <th>CONSTRUCTOR</th>
+              <th>DRIVERS</th>
+              <th>PTS</th>
+              <th>SHARE</th>
+            </tr>
+          </thead>
+          <tbody id="constructorsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RACE CALENDAR -->
+    <section id="calendar" class="section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag">SCHEDULE</span>
+          <h2 class="section-title">Race Calendar</h2>
+        </div>
+        <div class="year-filter">
+          <label for="calendarYear">Season:</label>
+          <select id="calendarYear" onchange="filterByYear()"></select>
+        </div>
+      </div>
+      <div id="raceGrid" class="race-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- MODAL -->
+  <div id="driverModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+      <div class="modal-inner">
+        <div class="modal-img-wrap">
+          <img id="modalImg" src="" alt="" onerror="this.src='https://placehold.co/240x300/111/444?text=F1'"/>
+          <div class="modal-team-stripe" id="modalTeamBadge"></div>
+        </div>
+        <div class="modal-info">
+          <div class="modal-flag-nat" id="modalNat"></div>
+          <h2 id="modalName"></h2>
+          <p id="modalTeam" class="modal-team-name"></p>
+          <div class="modal-stats">
+            <div class="stat-box"><span class="stat-val" id="modalWins"></span><span class="stat-lbl">WINS</span></div>
+            <div class="stat-box"><span class="stat-val" id="modalPodiums"></span><span class="stat-lbl">PODIUMS</span></div>
+            <div class="stat-box"><span class="stat-val" id="modalPoints"></span><span class="stat-lbl">POINTS</span></div>
+          </div>
+          <div class="modal-car-wrap">
+            <div class="modal-car-lbl">RACE CAR</div>
+            <img id="modalCarImg" src="" alt="Car" onerror="this.style.display='none'"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/200px-F1.svg.png" alt="F1" class="footer-logo"/>
+      <div>
+        <div class="footer-title">F1 Dashboard Project</div>
+        <div class="footer-inner">Created with love and passion by Arnadeep Saha</div>
+        <div class="footer-sub">Seasons 2020 – 2026 · 2026</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
